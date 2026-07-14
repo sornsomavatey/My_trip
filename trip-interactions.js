@@ -86,8 +86,50 @@
     content.append(meta, detail);
   }
 
+  function syncCutoutBackgrounds() {
+    const legs = Array.from(document.querySelectorAll(".leg"));
+    if (!legs.length) return;
+
+    const image = new Image();
+    let ticking = false;
+
+    function update() {
+      ticking = false;
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      const scale = Math.max(viewportWidth / image.naturalWidth, viewportHeight / image.naturalHeight);
+      const width = image.naturalWidth * scale;
+      const height = image.naturalHeight * scale;
+      const left = (viewportWidth - width) / 2;
+      const top = (viewportHeight - height) / 2;
+
+      legs.forEach((leg) => {
+        const rect = leg.getBoundingClientRect();
+        leg.style.setProperty("--cutout-bg-size", `${width}px ${height}px`);
+        leg.style.setProperty("--cutout-bg-position", `${left - rect.left}px ${top - rect.top}px`);
+        leg.style.setProperty("--cutout-bg-attachment", "scroll");
+      });
+    }
+
+    function requestUpdate() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    }
+
+    image.addEventListener("load", () => {
+      update();
+      window.addEventListener("scroll", requestUpdate, { passive: true });
+      window.addEventListener("resize", requestUpdate);
+      window.addEventListener("orientationchange", requestUpdate);
+    });
+
+    image.src = "image/background-image.webp";
+  }
+
   function init() {
     document.querySelectorAll(".leg").forEach(enhanceLeg);
+    syncCutoutBackgrounds();
 
     document.querySelectorAll(".stop").forEach((stop) => {
       buildStopControls(stop);

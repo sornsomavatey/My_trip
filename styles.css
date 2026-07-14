@@ -445,7 +445,7 @@ footer {
   border: 1px solid rgba(255, 255, 255, .22);
   background:
     linear-gradient(rgba(12, 18, 16, .22), rgba(12, 18, 16, .22)),
-    url("image/background-image.webp") center / cover fixed;
+    url("image/background-image.webp") var(--cutout-bg-position, center) / var(--cutout-bg-size, cover) var(--cutout-bg-attachment, fixed);
   background-color: rgba(12, 18, 16, .22);
   color: rgba(255, 255, 255, .94);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .16), 0 8px 18px rgba(10, 15, 13, .08);
@@ -511,7 +511,7 @@ footer {
   border-color: rgba(255, 255, 255, .22);
   background:
     linear-gradient(rgba(12, 18, 16, .22), rgba(12, 18, 16, .22)),
-    url("image/background-image.webp") center / cover fixed;
+    url("image/background-image.webp") var(--cutout-bg-position, center) / var(--cutout-bg-size, cover) var(--cutout-bg-attachment, fixed);
   background-color: rgba(12, 18, 16, .22);
   color: rgba(255, 255, 255, .94);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .16), 0 8px 18px rgba(10, 15, 13, .08);
