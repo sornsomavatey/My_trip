@@ -18,6 +18,8 @@
 html {
   scroll-behavior: smooth;
   background: url("image/background-image.webp") center / cover fixed;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -645,13 +647,11 @@ footer {
   .nav {
     width: min(360px, calc(100% - 28px));
     margin-top: -18px;
-    flex-wrap: nowrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 5px;
     padding: 4px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
+    overflow: hidden;
   }
 
   .nav::-webkit-scrollbar {
@@ -659,9 +659,10 @@ footer {
   }
 
   .nav a {
-    flex: 0 0 auto;
+    min-width: 0;
     min-height: 34px;
     padding: 4px 8px;
+    justify-content: center;
     gap: 5px;
     font-size: .76rem;
     white-space: nowrap;
@@ -805,7 +806,6 @@ footer {
 
   .nav {
     width: min(336px, calc(100% - 24px));
-    justify-content: center;
     gap: 4px;
     padding: 4px;
   }
@@ -858,5 +858,30 @@ footer {
 
   .photo-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 360px) {
+  .nav {
+    width: calc(100% - 18px);
+    gap: 3px;
+    padding: 3px;
+  }
+
+  .nav a {
+    min-height: 30px;
+    padding: 3px 5px;
+    gap: 3px;
+  }
+
+  .nav span {
+    min-width: 20px;
+    height: 18px;
+    padding: 0 4px;
+    font-size: .52rem;
+  }
+
+  .nav strong {
+    font-size: .62rem;
   }
 }
