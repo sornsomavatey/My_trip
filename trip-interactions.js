@@ -1,4 +1,49 @@
 (function () {
+  function makeLegPart(type, text) {
+    const part = document.createElement("span");
+    part.className = "leg-part";
+    part.dataset.type = type;
+    part.textContent = text.trim().replace(/^~\s*/, "");
+    return part;
+  }
+
+  function enhanceLeg(leg) {
+    const text = leg.textContent.trim();
+    if (!text || leg.dataset.enhanced === "true") return;
+
+    const pieces = text.split("|").map((piece) => piece.trim()).filter(Boolean);
+    const parts = [];
+
+    if (pieces.length) {
+      const first = pieces.shift();
+      const colonIndex = first.indexOf(":");
+
+      if (colonIndex > -1) {
+        const route = first.slice(0, colonIndex + 1);
+        const distance = first.slice(colonIndex + 1);
+        if (route.trim()) parts.push(makeLegPart("route", route));
+        if (distance.trim()) parts.push(makeLegPart("distance", distance));
+      } else {
+        parts.push(makeLegPart("route", first));
+      }
+    }
+
+    pieces.forEach((piece) => {
+      const lower = piece.toLowerCase();
+      const type = lower.includes("km")
+        ? "distance"
+        : lower.includes("min") || lower.includes("hr")
+          ? "duration"
+          : lower.includes("am") || lower.includes("pm")
+            ? "clock"
+          : "route";
+      parts.push(makeLegPart(type, piece));
+    });
+
+    leg.replaceChildren(...parts);
+    leg.dataset.enhanced = "true";
+  }
+
   function buildStopControls(stop) {
     const content = stop.querySelector("div");
     if (!content) return;
@@ -42,6 +87,8 @@
   }
 
   function init() {
+    document.querySelectorAll(".leg").forEach(enhanceLeg);
+
     document.querySelectorAll(".stop").forEach((stop) => {
       buildStopControls(stop);
     });
