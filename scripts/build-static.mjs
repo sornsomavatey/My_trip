@@ -3,7 +3,7 @@ import path from "node:path";
 
 const root = process.cwd();
 const dist = path.join(root, "dist");
-const files = ["index.html", "styles.css", "trip-interactions.js", "_headers"];
+const files = ["index.html", "styles.css", "trip-interactions.js", "favicon.svg", "_headers"];
 const dirs = ["image"];
 
 fs.rmSync(dist, { recursive: true, force: true });
