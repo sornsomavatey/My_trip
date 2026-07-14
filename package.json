@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "start": "node server.js 3001",
+    "build": "node scripts/build-static.mjs"
+  }
+}
